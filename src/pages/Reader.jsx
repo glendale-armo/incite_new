@@ -16,6 +16,7 @@ export default function Reader() {
   const [selection, setSelection] = useState(null)
   const [activeHighlight, setActiveHighlight] = useState(null)
   const [fontSize, setFontSize] = useState(100)
+  const [bookUrl, setBookUrl] = useState(null)
 
   useEffect(() => {
     if (!book) navigate('/')
@@ -89,7 +90,27 @@ export default function Reader() {
     if (rendition) rendition.themes.fontSize(`${newSize}%`)
   }
 
-  if (!book) return null
+  useEffect(() => {
+    let objectUrl
+    async function prepareBook() {
+      try {
+        const res = await fetch(book.file)
+        const blob = await res.blob()
+        objectUrl = URL.createObjectURL(blob)
+        setBookUrl(objectUrl)
+      } catch (e) {
+        console.error('Failed to load book', e)
+      }
+    }
+    if (book?.file) {
+      prepareBook()
+    }
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
+  }, [book?.file])
+
+  if (!book || !bookUrl) return null
 
   return (
     <div className="reader-view">
@@ -108,7 +129,7 @@ export default function Reader() {
         </div>
         <div className="reader">
           <ReactReader
-            url={book.file}
+            url={bookUrl}
             location={location}
             locationChanged={onLocationChanged}
             getRendition={(r) => setRendition(r)}
