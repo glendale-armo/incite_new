@@ -1,0 +1,49 @@
+.library {
+  padding: 1rem;
+}
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.book-card {
+  width: 120px;
+  cursor: pointer;
+  text-align: center;
+}
+.book-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.reader-view {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  width: 200px;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+}
+.sidebar .tabs button {
+  margin-right: 4px;
+}
+.reader-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+.reader {
+  flex: 1;
+}
+.highlight-menu button {
+  font-size: 12px;
+}
